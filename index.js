@@ -1,13 +1,11 @@
 'use strict';
 
-const { start, sequelize } = require('./src/server');
-const { sequelize } = require('./src/auth/models')
-
-
-sequelize.sync()
+// Start up DB Server
+const { db } = require('./src/auth/models/index.js');
+db.sync()
   .then(() => {
-    console.log('successful connection');
-    start();
-  })
-  .catch(e => console.error(e));
+
+    // Start the web server
+    require('./src/server.js').start(process.env.PORT);
+  });
 
